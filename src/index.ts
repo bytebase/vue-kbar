@@ -1,3 +1,3 @@
-import HelloHeihei from "./HelloHeihei.vue";
+import ComponentsHello from "./components/ComponentsHello.vue";
 
-export { HelloHeihei };
+export { ComponentsHello };
