@@ -6,6 +6,7 @@ import KBarSearch from "./KBarSearch.vue";
 import { useKBarState } from "./useKBarState";
 import { useKBarHandler } from "./useKBarHandler";
 import { useKBarMatches } from "./useKBarMatches";
+import { createAction } from "./action";
 
 export * from "./types";
 export {
@@ -17,4 +18,5 @@ export {
   useKBarState,
   useKBarHandler,
   useKBarMatches,
+  createAction,
 };

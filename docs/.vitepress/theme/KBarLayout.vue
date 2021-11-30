@@ -43,6 +43,7 @@ import {
   KBarPositioner,
   KBarAnimator,
   KBarSearch,
+  createAction,
 } from "../../../src";
 
 export default defineComponent({
@@ -67,9 +68,35 @@ export default defineComponent({
         name: "Bar",
         subtitle: "This action contains hidden keywords",
         keywords: "baz",
-        section: "Grouped",
         perform: () => console.log("bar"),
       },
+      createAction({
+        id: "theme",
+        name: "Change theme…",
+        keywords: "interface color dark light",
+        section: "Preferences",
+      }),
+      createAction({
+        id: "theme-dark",
+        name: "Dark",
+        keywords: "dark theme",
+        section: "",
+        parent: "theme",
+        perform: (actionImpl) => {
+          console.log("change theme to dark");
+        },
+      }),
+      createAction({
+        id: "theme-light",
+        name: "Light",
+        keywords: "light theme",
+        section: "",
+        parent: "theme",
+        perform: (actionImpl) => {
+          console.log("change theme to light");
+        },
+      }),
+
       // {
       //   id: "homeAction",
       //   name: "Home",

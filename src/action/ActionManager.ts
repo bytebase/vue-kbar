@@ -15,11 +15,12 @@ export class ActionManager {
       const action = actions[i];
       if (action.parent) {
         invariant(
-          !this.map.has(action.parent),
+          this.map.has(action.parent),
           `Attempted to create action "${action.name}" without registering its parent "${action.parent}" first.`
         );
       }
-      this.actions.push(this._createActionImpl(action));
+
+      this._createActionImpl(action);
     }
     return [...this.actions];
   }
@@ -29,6 +30,7 @@ export class ActionManager {
       const id = actionIds[i];
       const action = this.map.get(id);
       if (!action) continue;
+      this._removeActionImpl(action.id);
       this.remove(action.children.map((child) => child.id));
       if (action.parent) {
         const parent = this.map.get(action.parent)!;
@@ -44,10 +46,20 @@ export class ActionManager {
       children: [],
     };
     if (action.parent) {
-      const parent = this.map.get(action.id)!;
+      const parent = this.map.get(action.parent)!;
       parent.children.push(impl);
     }
+    this.actions.push(impl);
+    this.map.set(impl.id, impl);
     return impl;
+  }
+
+  _removeActionImpl(id: ActionId): void {
+    const index = this.actions.findIndex((act) => act.id === id);
+    if (index >= 0) {
+      this.actions.splice(index, 1);
+    }
+    this.map.delete(id);
   }
 
   _removeChild(parent: ActionImpl, childId: ActionId): void {
