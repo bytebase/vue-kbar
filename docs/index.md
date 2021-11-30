@@ -1,18 +1,33 @@
 <script setup>
-import LocalHello from './LocalHello.vue';
-import SrcHello from '../src/SrcHello.vue';
-import ComponentsHello from '../src/components/ComponentsHello.vue';
-import { ComponentsHello as ComponentsHelloFromIndex } from '../src';
+import { useKBarState, useKBarHandler, useKBarMatches } from "../src";
+
+const state = useKBarState();
+const handler = useKBarHandler();
+const matches = useKBarMatches();
 </script>
 
 # hello
+
+<label for="focus-test">To test focus management: </label><input name="focus-test" />
 
 :::warning
 This is WIP!
 :::
 
-<LocalHello />
-<SrcHello />
-<ComponentsHello from="raw" />
-<ComponentsHelloFromIndex from="index" />
-卧槽又可以了??
+state:
+
+<pre>
+{{ JSON.stringify(state, null, "  ") }}
+</pre>
+
+handler:
+
+<pre>
+{{ JSON.stringify(handler, null, "  ") }}
+</pre>
+
+matches:
+
+<pre>
+{{ JSON.stringify(matches, null, "  ") }}
+</pre>
