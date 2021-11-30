@@ -1,0 +1,31 @@
+{
+  "name": "vue-kbar",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build:docs": "vitepress build docs",
+    "docs:serve": "vitepress serve docs",
+    "lint": "eslint --cache --ext .js,.ts,.tsx,.vue src",
+    "lint:summary": "SORT_BY=rule DESC=true eslint -f summary --cache --ext .js,.ts,.tsx,.vue src",
+    "lint:fix": "eslint --cache --ext .js,.ts,.tsx,.vue --fix src"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "@vue/eslint-config-typescript": "^9.1.0",
+    "eslint": "^8.3.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-formatter-summary": "^1.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.1.1",
+    "prettier": "^2.5.0",
+    "typescript": "^4.5.2",
+    "vitepress": "^0.20.1"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "vue": "^3.2.23"
+  }
+}

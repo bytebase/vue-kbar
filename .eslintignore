@@ -1,0 +1,7 @@
+!.vuepress
+!.eslintrc.js
+!.prettierrc.js
+
+dist/
+es/
+lib/
