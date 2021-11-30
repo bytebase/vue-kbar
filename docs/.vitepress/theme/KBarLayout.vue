@@ -1,9 +1,30 @@
 <template>
-  <KBarProvider>
+  <KBarProvider :actions="initialActions">
     <KBarPortal>
       <KBarPositioner>
-        <KBarAnimator>
-          <KBarSearch />
+        <KBarAnimator
+          style="
+            max-width: 600px;
+            width: 100%;
+            background: var(--background);
+            color: var(--foreground);
+            border-radius: var(--unit);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+          "
+        >
+          <KBarSearch
+            style="
+              padding: 12px 16px;
+              font-size: 16px;
+              width: 100%;
+              box-sizing: border-box;
+              outline: none;
+              border: none;
+              background: var(--background);
+              color: var(--foreground);
+            "
+          />
         </KBarAnimator>
       </KBarPositioner>
     </KBarPortal>
@@ -34,5 +55,78 @@ export default defineComponent({
     KBarAnimator,
     KBarSearch,
   },
+  setup() {
+    const initialActions = [
+      {
+        id: "foo",
+        name: "Foo",
+        perform: () => console.log("foo"),
+      },
+      {
+        id: "bar",
+        name: "Bar",
+        subtitle: "This action contains hidden keywords",
+        keywords: "baz",
+        section: "Grouped",
+        perform: () => console.log("bar"),
+      },
+      // {
+      //   id: "homeAction",
+      //   name: "Home",
+      //   shortcut: ["h"],
+      //   keywords: "back",
+      //   section: "Navigation",
+      //   perform: () => history.push("/"),
+      //   icon: <HomeIcon />,
+      //   subtitle: "Subtitles can help add more context.",
+      // },
+      // {
+      //   id: "docsAction",
+      //   name: "Docs",
+      //   shortcut: ["g", "d"],
+      //   keywords: "help",
+      //   section: "Navigation",
+      //   perform: () => history.push("/docs"),
+      // },
+      // {
+      //   id: "contactAction",
+      //   name: "Contact",
+      //   shortcut: ["c"],
+      //   keywords: "email hello",
+      //   section: "Navigation",
+      //   perform: () => window.open("mailto:timchang@hey.com", "_blank"),
+      // },
+      // {
+      //   id: "twitterAction",
+      //   name: "Twitter",
+      //   shortcut: ["t"],
+      //   keywords: "social contact dm",
+      //   section: "Navigation",
+      //   perform: () => window.open("https://twitter.com/timcchang", "_blank"),
+      // },
+      // createAction({
+      //   name: "Github",
+      //   shortcut: ["g", "h"],
+      //   keywords: "sourcecode",
+      //   section: "Navigation",
+      //   perform: () => window.open("https://github.com/timc1/kbar", "_blank"),
+      // }),
+    ];
+    return {
+      initialActions,
+    };
+  },
 });
 </script>
+
+<style>
+:root {
+  --background: rgb(252 252 252);
+  --a1: rgba(0 0 0 / 0.05);
+  --a2: rgba(0 0 0 / 0.1);
+  --foreground: rgb(28 28 29);
+  --shadow: 0px 6px 20px rgb(0 0 0 / 20%);
+
+  --unit: 8px;
+}
+</style>

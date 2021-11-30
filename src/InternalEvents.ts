@@ -32,7 +32,6 @@ function useToggleHandler() {
         // options.callbacks?.onOpen?.();
       }
     }
-    console.log(e.key, showing);
     if (e.key === "Escape") {
       if (showing) {
         e.stopPropagation();

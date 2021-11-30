@@ -14,7 +14,7 @@ export interface Action<T = any> {
 
 // internal type of Action
 // to organize actions as a tree
-type ActionImpl = Action & {
+export type ActionImpl = Action & {
   children: ActionImpl[];
 };
 
@@ -34,13 +34,14 @@ export interface KBarState {
   visibility: VisualState;
 }
 
-export type VisualStateUpdateCallback = (vs: VisualState) => VisualState;
+export type UpdateCallback<T> = (curr: T) => T;
 
 export interface KBarHandler {
   setSearch: (search: string) => void;
   registerActions: (actions: Action[]) => () => void; // returns a function to unregister
   setCurrentRootAction: (actionId: ActionId | null) => void;
-  setVisibility: (cb: VisualStateUpdateCallback | VisualState) => void; // set visibility programmatically
+  setActiveIndex: (cb: UpdateCallback<number> | number) => void;
+  setVisibility: (cb: UpdateCallback<VisualState> | VisualState) => void; // set visibility programmatically
   toggle: () => void;
   show: () => void;
   hide: () => void;

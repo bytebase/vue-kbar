@@ -4,6 +4,7 @@ import { useKBarState, useKBarHandler, useKBarMatches } from "../src";
 const state = useKBarState();
 const handler = useKBarHandler();
 const matches = useKBarMatches();
+
 </script>
 
 # hello
