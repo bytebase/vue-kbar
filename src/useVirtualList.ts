@@ -136,15 +136,13 @@ export function useVirtualList<T = any>(
           : options.itemHeight(index);
       const rect = [itemTop, itemTop + itemHeight];
       const relationship = inside(viewport, rect);
+      if (relationship === "inside") return;
       if (edge === "auto") {
-        if (relationship === "inside") return;
+        // if (relationship === "inside") return;
         if (relationship === "wrapped") edge = "start";
         if (relationship === "before") edge = "start";
         if (relationship === "after") edge = "end";
       }
-      if (relationship === "inside" && edge === "auto") return;
-      if (relationship === "before" && edge === "auto") edge = "start";
-      if (relationship === "after" && edge === "auto") edge = "end";
       const top =
         edge === "start"
           ? itemTop
