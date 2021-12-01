@@ -1,12 +1,5 @@
 import { useEventListener } from "@vueuse/core";
-import {
-  defineComponent,
-  onMounted,
-  onUnmounted,
-  ref,
-  watch,
-  watchEffect,
-} from "vue";
+import { defineComponent, ref, watch, watchEffect } from "vue";
 import { useKBarHandler, useKBarState } from ".";
 
 export const InternalEvents = defineComponent({
@@ -26,7 +19,7 @@ function useToggleHandler() {
   const state = useKBarState();
   const handler = useKBarHandler();
 
-  function keyDown(e: KeyboardEvent) {
+  useEventListener("keydown", (e) => {
     const showing = state.value.visibility !== "hidden";
     if (
       (e.metaKey || e.ctrlKey) &&
@@ -47,22 +40,15 @@ function useToggleHandler() {
         e.stopPropagation();
         // options.callbacks?.onClose?.();
       }
-
-      handler.value.setVisibility((vs) => {
-        console.log("set vs", vs);
-        if (vs === "hidden" || vs === "leaving") {
-          return vs;
-        }
-        return "leaving";
-      });
+      handler.value.hide();
     }
-  }
-
-  onMounted(() => {
-    window.addEventListener("keydown", keyDown, true);
   });
-  onUnmounted(() => {
-    window.removeEventListener("keydown", keyDown, true);
+
+  watchEffect(() => {
+    const { visibility } = state.value;
+    if (visibility === "entering" || visibility === "hidden") {
+      handler.value.setCurrentRootAction(null);
+    }
   });
 }
 
@@ -152,13 +138,7 @@ function useShortcuts() {
       }
       if (action.shortcut.join("") === bufferString) {
         event.preventDefault();
-        console.log("should perform", bufferString, action);
-        if (action.children?.length > 0) {
-          handler.value.setCurrentRootAction(action.id);
-          handler.value.show();
-        } else {
-          action.perform?.(action);
-        }
+        handler.value.performAction(action);
         buffer.length = 0;
         break;
       }

@@ -27,9 +27,10 @@ export type ActionTree = ActionImpl[];
 export type VisualState = "entering" | "visible" | "leaving" | "hidden";
 
 export interface KBarState {
+  options: KBarOptions;
   search: string;
   actions: ActionTree;
-  currentRootActionId: ActionId | null; // used when dived into action groups
+  currentRootActionId: ActionId | null | undefined; // used when dived into action groups
   activeIndex: number;
   visibility: VisualState;
 }
@@ -39,12 +40,13 @@ export type UpdateCallback<T> = (curr: T) => T;
 export interface KBarHandler {
   setSearch: (search: string) => void;
   registerActions: (actions: Action[]) => () => void; // returns a function to unregister
-  setCurrentRootAction: (actionId: ActionId | null) => void;
+  setCurrentRootAction: (actionId: ActionId | null | undefined) => void;
   setActiveIndex: (cb: UpdateCallback<number> | number) => void;
   setVisibility: (cb: UpdateCallback<VisualState> | VisualState) => void; // set visibility programmatically
   toggle: () => void;
   show: () => void;
   hide: () => void;
+  performAction: (action: ActionImpl) => void;
 }
 
 // match results are not part of KBarState
@@ -58,7 +60,9 @@ export interface KBarHandler {
 //   3. rootActionId changed
 export interface KBarMatches {
   results: (string | Action)[]; // string for section title
-  rootActionId: string | null;
+  rootActionId: string | null | undefined;
 }
 
-export interface KBarOptions {}
+export interface KBarOptions {
+  placeholder: string;
+}

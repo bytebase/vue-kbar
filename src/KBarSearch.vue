@@ -1,18 +1,21 @@
 <template>
   <input
-    ref="input"
+    ref="inputRef"
     auto-focus
     auto-complete="off"
     role="combobox"
     spell-check="false"
     :value="search"
+    :placeholder="placeholder"
     v-bind="$attrs"
+    @keydown="onKeyDown"
     @input="onInput"
   />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watchEffect } from "vue";
+import { computed, defineComponent, ref, watch, watchEffect } from "vue";
+import { useKBarHandler } from "./useKBarHandler";
 import { useKBarState } from "./useKBarState";
 
 export default defineComponent({
@@ -22,37 +25,55 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const state = useKBarState();
-    const input = ref<HTMLInputElement | null>(null);
+    const handler = useKBarHandler();
+    const inputRef = ref<HTMLInputElement | null>(null);
 
-    watchEffect(() => {
+    const maybeFocus = () => {
       if (state.value.visibility === "visible") {
-        input.value && input.value.focus();
+        inputRef.value?.focus();
       }
-    });
+    };
+    watchEffect(maybeFocus);
+    watch(() => state.value.currentRootActionId, maybeFocus);
 
     function onInput(e: InputEvent) {
       emit("input", e);
       const input = e.target as HTMLInputElement;
-      state.value.search = input.value;
+      handler.value.setSearch(input.value);
       // options?.callbacks?.onQueryChange?.(event.target.value);
     }
 
-    // onInput={(event) => {
-    //   props.onInput?.(event);
-    //   query.setSearch(event.target.value);
-    //   options?.callbacks?.onQueryChange?.(event.target.value);
-    // }}
-    // onKeyDown={(event) => {
-    //   if (currentRootActionId && !search && event.key === "Backspace") {
-    //     const parent = actions[currentRootActionId].parent;
-    //     query.setCurrentRootAction(parent);
-    //   }
-    // }}
+    function onKeyDown(e: KeyboardEvent) {
+      if (
+        e.key === "Backspace" &&
+        !state.value.search &&
+        !!state.value.currentRootActionId
+      ) {
+        const current = state.value.actions.find(
+          (act) => act.id === state.value.currentRootActionId
+        );
+        if (current) {
+          handler.value.setCurrentRootAction(current.parent);
+        }
+      }
+    }
+
+    const placeholder = computed(() => {
+      if (state.value.currentRootActionId) {
+        const action = state.value.actions.find(
+          (act) => act.id === state.value.currentRootActionId
+        );
+        if (action) return action.name;
+      }
+      return state.value.options.placeholder;
+    });
 
     return {
-      search: state.value.search,
-      input,
+      search: computed(() => state.value.search),
+      placeholder,
+      inputRef,
       onInput,
+      onKeyDown,
     };
   },
 });

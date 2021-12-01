@@ -54,7 +54,6 @@ export function useInternalMatches(state: Ref<KBarState>) {
     const { actions, search, rootActionId } = throttledSearchOptions.value;
     const results = performMatch(actions, search);
     const grouped = groupMatches(results);
-    console.log("matches updated", grouped);
     matches.value.results = grouped;
     matches.value.rootActionId = rootActionId;
   });

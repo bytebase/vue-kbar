@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { ActionImpl, KBarOptions } from ".";
 import { ActionManager } from "./action";
 import {
   Action,
@@ -10,8 +11,9 @@ import {
 } from "./types";
 import { useInternalMatches } from "./useInternalMatches";
 
-export function useInternalState(options: any, actions: Action[]) {
+export function useInternalState(options: KBarOptions, actions: Action[]) {
   const state = ref<KBarState>({
+    options,
     search: "",
     actions: [],
     currentRootActionId: null,
@@ -23,8 +25,11 @@ export function useInternalState(options: any, actions: Action[]) {
   const setSearch = (search: string): void => {
     state.value.search = search;
   };
-  const setCurrentRootAction = (actionId: ActionId | null): void => {
+  const setCurrentRootAction = (
+    actionId: ActionId | null | undefined
+  ): void => {
     state.value.currentRootActionId = actionId;
+    state.value.search = "";
   };
   const registerActions = (actions: Action[]): (() => void) => {
     state.value.actions = actionManager.add(actions);
@@ -56,8 +61,26 @@ export function useInternalState(options: any, actions: Action[]) {
       }
     });
   };
-  const show = () => setVisibility("entering");
-  const hide = () => setVisibility("leaving");
+  const show = () => {
+    setVisibility((vs) =>
+      vs === "leaving" || vs === "hidden" ? "entering" : vs
+    );
+  };
+  const hide = () => {
+    setVisibility((vs) =>
+      vs === "entering" || vs === "visible" ? "leaving" : vs
+    );
+  };
+  const performAction = (action: ActionImpl) => {
+    if (action.perform) {
+      action.perform(action);
+      handler.value.hide();
+    } else {
+      console.log("dive into", action.id);
+      handler.value.setCurrentRootAction(action.id);
+      handler.value.setSearch("");
+    }
+  };
 
   const handler = ref<KBarHandler>({
     setSearch,
@@ -68,6 +91,7 @@ export function useInternalState(options: any, actions: Action[]) {
     toggle,
     show,
     hide,
+    performAction,
   });
   const matches = useInternalMatches(state);
 

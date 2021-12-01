@@ -127,7 +127,6 @@ export function useVirtualList<T = any>(
     if (containerRef.value) {
       const container = containerRef.value;
       const vTop = container.scrollTop;
-      const offset = getOffset(vTop);
       const vHeight = container.clientHeight;
       const viewport = [vTop, vTop + vHeight];
       const itemTop = getDistanceTop(index);

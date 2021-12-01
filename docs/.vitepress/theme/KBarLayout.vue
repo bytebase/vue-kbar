@@ -24,7 +24,6 @@
               background: var(--background);
               color: var(--foreground);
             "
-            placeholder="Type a command or search…"
           />
           <RenderResults />
         </KBarAnimator>

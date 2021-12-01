@@ -94,13 +94,7 @@ export default defineComponent({
       const action = props.items[index];
       if (!action) return;
       if (typeof action === "string") return;
-      if (action.children?.length > 0) {
-        handler.value.setCurrentRootAction(action.id);
-        handler.value.setSearch("");
-      } else {
-        action.perform?.(action);
-        handler.value.hide();
-      }
+      handler.value.performAction(action);
     };
 
     useEventListener("keydown", (e) => {
