@@ -24,7 +24,9 @@
               background: var(--background);
               color: var(--foreground);
             "
+            placeholder="Type a command or search…"
           />
+          <RenderResults />
         </KBarAnimator>
       </KBarPositioner>
     </KBarPortal>
@@ -45,6 +47,7 @@ import {
   KBarSearch,
   createAction,
 } from "../../../src";
+import RenderResults from "./RenderResults.vue";
 
 export default defineComponent({
   name: "KBarLayout",
@@ -55,12 +58,14 @@ export default defineComponent({
     KBarPositioner,
     KBarAnimator,
     KBarSearch,
+    RenderResults,
   },
   setup() {
     const initialActions = [
       {
         id: "foo",
         name: "Foo",
+        shortcut: ["f", "o", "o"],
         perform: () => console.log("foo"),
       },
       {
@@ -139,6 +144,19 @@ export default defineComponent({
       //   perform: () => window.open("https://github.com/timc1/kbar", "_blank"),
       // }),
     ];
+    function paddingLeft(str, len, pad = " ") {
+      str = "" + str;
+      while (str.length < len) str = pad + str;
+      return str.substr(str.length - len);
+    }
+    for (let i = 0; i < 20; i++) {
+      initialActions.push(
+        createAction({
+          name: `Fake Action #${paddingLeft(i + 1, 2, "0")}`,
+          section: "Fake",
+        })
+      );
+    }
     return {
       initialActions,
     };

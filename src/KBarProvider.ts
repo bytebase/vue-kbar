@@ -19,6 +19,6 @@ export default defineComponent({
     provide("k-bar-matches", matches);
   },
   render() {
-    return [h(InternalEvents), this.$slots.default!()];
+    return [h(InternalEvents), this.$slots.default?.()];
   },
 });

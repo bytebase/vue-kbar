@@ -3,6 +3,7 @@ import KBarPortal from "./KBarPortal.vue";
 import KBarPositioner from "./KBarPositioner.vue";
 import KBarAnimator from "./KBarAnimator.vue";
 import KBarSearch from "./KBarSearch.vue";
+import KBarResults from "./KBarResults.vue";
 import { useKBarState } from "./useKBarState";
 import { useKBarHandler } from "./useKBarHandler";
 import { useKBarMatches } from "./useKBarMatches";
@@ -15,6 +16,7 @@ export {
   KBarPositioner,
   KBarAnimator,
   KBarSearch,
+  KBarResults,
   useKBarState,
   useKBarHandler,
   useKBarMatches,

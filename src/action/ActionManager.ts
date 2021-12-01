@@ -42,6 +42,7 @@ export class ActionManager {
 
   _createActionImpl(action: Action): ActionImpl {
     const impl: ActionImpl = {
+      ...EMPTY_ACTION,
       ...action,
       children: [],
     };
@@ -69,3 +70,16 @@ export class ActionManager {
     }
   }
 }
+
+function noop() {
+  // nothing
+}
+
+const EMPTY_ACTION: Partial<Action> = {
+  shortcut: [],
+  keywords: "",
+  subtitle: "",
+  section: "",
+  perform: noop,
+  parent: "",
+};

@@ -6,6 +6,7 @@
     role="combobox"
     spell-check="false"
     :value="search"
+    v-bind="$attrs"
     @input="onInput"
   />
 </template>
