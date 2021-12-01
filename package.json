@@ -1,12 +1,18 @@
 {
   "name": "@bytebase/vue-kbar",
   "version": "0.1.0",
-  "main": "index.js",
   "license": "MIT",
+  "module": "dist/index.es.js",
+  "main": "dist/index.umd.js",
+  "typings": "dist_types/index.d.ts",
   "scripts": {
     "dev": "vitepress dev docs",
-    "build:docs": "vitepress build docs",
-    "docs:serve": "vitepress serve docs",
+    "build:clean": "rimraf ./dist_types ./dist",
+    "build:types": "vue-tsc --declaration --emitDeclarationOnly",
+    "build:vite": "vite build",
+    "build": "npm run build:clean && npm run build:types && npm run build:vite",
+    "typecheck": "vue-tsc --noEmit",
+    "docs": "vitepress build docs",
     "lint": "eslint --cache --ext .js,.ts,.tsx,.vue src",
     "lint:summary": "SORT_BY=rule DESC=true eslint -f summary --cache --ext .js,.ts,.tsx,.vue src",
     "lint:fix": "eslint --cache --ext .js,.ts,.tsx,.vue --fix src"
@@ -14,6 +20,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
+    "@vitejs/plugin-vue": "^1.10.1",
     "@vue/eslint-config-typescript": "^9.1.0",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
@@ -21,8 +28,12 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.1.1",
     "prettier": "^2.5.0",
+    "rimraf": "^3.0.2",
+    "rollup-plugin-visualizer": "^5.5.2",
     "typescript": "^4.5.2",
-    "vitepress": "^0.20.1"
+    "vite": "^2.6.14",
+    "vitepress": "^0.20.1",
+    "vue-tsc": "^0.29.8"
   },
   "dependencies": {
     "@vueuse/core": "^7.1.2",

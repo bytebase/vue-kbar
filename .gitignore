@@ -3,6 +3,8 @@
 
 node_modules
 dist
+dist_types
+dist_analyze
 
 # local env files
 .env.local

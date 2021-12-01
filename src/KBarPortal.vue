@@ -6,7 +6,7 @@
   </teleport>
 </template>
 
-<script>
+<script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useKBarState } from "./useKBarState";
 
