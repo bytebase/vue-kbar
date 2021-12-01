@@ -76,7 +76,6 @@ export function useInternalState(options: KBarOptions, actions: Action[]) {
       action.perform(action);
       handler.value.hide();
     } else {
-      console.log("dive into", action.id);
       handler.value.setCurrentRootAction(action.id);
       handler.value.setSearch("");
     }
