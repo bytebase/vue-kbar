@@ -66,7 +66,8 @@ export default defineComponent({
         id: "foo",
         name: "Foo",
         shortcut: ["f", "o", "o"],
-        perform: () => console.log("foo"),
+        section: "Navigation",
+        perform: () => console.log("yahaha! you found foo!"),
       },
       {
         id: "bar",

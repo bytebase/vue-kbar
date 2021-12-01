@@ -1,5 +1,5 @@
 <template>
-  <div><slot /></div>
+  <div class="k-bar-animator" style="pointer-events: auto"><slot /></div>
 </template>
 
 <script>
