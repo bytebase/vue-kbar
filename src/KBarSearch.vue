@@ -36,8 +36,8 @@ export default defineComponent({
     watchEffect(maybeFocus);
     watch(() => state.value.currentRootActionId, maybeFocus);
 
-    function onInput(e: InputEvent) {
-      emit("input", e);
+    function onInput(e: Event) {
+      emit("input", e as InputEvent);
       const input = e.target as HTMLInputElement;
       handler.value.setSearch(input.value);
       // options?.callbacks?.onQueryChange?.(event.target.value);

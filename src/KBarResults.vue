@@ -24,6 +24,7 @@ import { useEventListener } from "@vueuse/core";
 import {
   computed,
   defineComponent,
+  onMounted,
   PropType,
   ref,
   watch,
@@ -79,15 +80,17 @@ export default defineComponent({
       return first;
     });
 
+    const activeFirstAction = () => {
+      handler.value.setActiveIndex(firstActionIndex.value);
+    };
+    onMounted(activeFirstAction);
     watch(
-      computed(() => ({
-        items: props.items,
-        rootActionId: state.value.currentRootActionId,
-        search: state.value.search,
-      })),
-      () => {
-        handler.value.setActiveIndex(firstActionIndex.value);
-      }
+      [
+        () => props.items,
+        () => state.value.currentRootActionId,
+        () => state.value.search,
+      ],
+      activeFirstAction
     );
 
     const performAction = (index: number) => {
@@ -116,7 +119,7 @@ export default defineComponent({
         e.preventDefault();
         handler.value.setActiveIndex((index) => {
           const max = items.value.length;
-          if (index === max - 1) return max;
+          if (index === max - 1) return index;
           let next = index + 1;
           // skip on a section title
           while (typeof items.value[next] === "string") {
@@ -144,13 +147,11 @@ export default defineComponent({
 
     watchEffect(() => {
       const index = state.value.activeIndex;
+      const first = firstActionIndex.value;
 
       // if we are travelling to or before the first Action
       // ensure its section title is shown before it
-      scrollIntoView(
-        state.value.activeIndex,
-        index <= firstActionIndex.value ? "end" : "auto"
-      );
+      scrollIntoView(index, index <= first ? "end" : "auto");
     });
 
     return {

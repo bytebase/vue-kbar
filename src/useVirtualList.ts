@@ -1,4 +1,4 @@
-import { watch, Ref, ref, computed, shallowRef } from "vue";
+import { watch, Ref, ref, computed, shallowRef, CSSProperties } from "vue";
 import { useElementSize, MaybeRef } from "@vueuse/core";
 
 export interface UseVirtualListOptions {
@@ -135,8 +135,10 @@ export function useVirtualList<T = any>(
           ? options.itemHeight
           : options.itemHeight(index);
       const rect = [itemTop, itemTop + itemHeight];
-      const relationship = inside(viewport, rect);
-      if (relationship === "inside") return;
+      const relationship = intersects(viewport, rect);
+      if (relationship === "inside") {
+        return;
+      }
       if (edge === "auto") {
         // if (relationship === "inside") return;
         if (relationship === "wrapped") edge = "start";
@@ -166,7 +168,7 @@ export function useVirtualList<T = any>(
     };
   });
 
-  const containerStyle: Partial<CSSStyleDeclaration> = { overflowY: "auto" };
+  const containerStyle: CSSProperties = { overflowY: "auto" };
 
   return {
     list: currentList,
@@ -183,7 +185,7 @@ export function useVirtualList<T = any>(
   };
 }
 
-function inside(
+function intersects(
   a: number[],
   b: number[]
 ): "before" | "inside" | "wrapped" | "after" {
