@@ -14,6 +14,7 @@ export default defineConfig(() => {
       lib: {
         entry: resolvePath("src/index.ts"),
         name: "VueKBar",
+        fileName: (format) => `index.${format}.js`,
       },
       outDir: "dist",
       emptyOutDir: true,
