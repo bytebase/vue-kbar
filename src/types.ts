@@ -39,7 +39,7 @@ export type UpdateCallback<T> = (curr: T) => T;
 
 export interface KBarHandler {
   setSearch: (search: string) => void;
-  registerActions: (actions: Action[]) => () => void; // returns a function to unregister
+  registerActions: (actions: Action[], prepend?: boolean) => () => void; // returns a function to unregister
   setCurrentRootAction: (actionId: ActionId | null | undefined) => void;
   setActiveIndex: (cb: UpdateCallback<number> | number) => void;
   setVisibility: (cb: UpdateCallback<VisualState> | VisualState) => void; // set visibility programmatically
@@ -59,7 +59,7 @@ export interface KBarHandler {
 //   2. actions changed
 //   3. rootActionId changed
 export interface KBarMatches {
-  results: (string | Action)[]; // string for section title
+  results: (string | ActionImpl)[]; // string for section title
   rootActionId: string | null | undefined;
 }
 

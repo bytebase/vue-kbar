@@ -10,7 +10,8 @@ export class ActionManager {
     this.map = new Map();
   }
 
-  add(actions: Action[]) {
+  add(actions: Action[], prepend = false) {
+    const impls: ActionImpl[] = [];
     for (let i = 0; i < actions.length; i++) {
       const action = actions[i];
       if (action.parent) {
@@ -19,9 +20,15 @@ export class ActionManager {
           `Attempted to create action "${action.name}" without registering its parent "${action.parent}" first.`
         );
       }
+      if (this.map.has(action.id)) {
+        console.warn(`Duplicated action id "${action.id}".`);
+        continue;
+      }
 
-      this._createActionImpl(action);
+      impls.push(this._createActionImpl(action));
     }
+    if (prepend) this.actions.unshift(...impls);
+    else this.actions.push(...impls);
     return [...this.actions];
   }
 
@@ -34,6 +41,10 @@ export class ActionManager {
       this.remove(action.children.map((child) => child.id));
       if (action.parent) {
         const parent = this.map.get(action.parent)!;
+        if (!parent) {
+          console.warn(`Missing parent "${action.parent}".`);
+          continue;
+        }
         this._removeChild(parent, action.id);
       }
     }
@@ -50,7 +61,6 @@ export class ActionManager {
       const parent = this.map.get(action.parent)!;
       parent.children.push(impl);
     }
-    this.actions.push(impl);
     this.map.set(impl.id, impl);
     return impl;
   }

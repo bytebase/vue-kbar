@@ -31,8 +31,11 @@ export function useInternalState(options: KBarOptions, actions: Action[]) {
     state.value.currentRootActionId = actionId;
     state.value.search = "";
   };
-  const registerActions = (actions: Action[]): (() => void) => {
-    state.value.actions = actionManager.add(actions);
+  const registerActions = (
+    actions: Action[],
+    prepend = false
+  ): (() => void) => {
+    state.value.actions = actionManager.add(actions, prepend);
     const unregister = () => {
       state.value.actions = actionManager.remove(actions.map((act) => act.id));
     };
