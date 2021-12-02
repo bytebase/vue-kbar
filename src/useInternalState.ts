@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import { ActionImpl, KBarOptions } from ".";
 import { ActionManager } from "./action";
 import {
@@ -22,6 +22,9 @@ export function useInternalState(options: KBarOptions, actions: Action[]) {
   });
   const actionManager = new ActionManager();
 
+  const setOptions = (options: KBarOptions) => {
+    state.value.options = options;
+  };
   const setSearch = (search: string): void => {
     state.value.search = search;
   };
@@ -49,11 +52,16 @@ export function useInternalState(options: KBarOptions, actions: Action[]) {
     }
   };
   const setVisibility = (cb: UpdateCallback<VisualState> | VisualState) => {
-    if (typeof cb === "function") {
-      state.value.visibility = cb(state.value.visibility);
-    } else {
-      state.value.visibility = cb;
+    const value = typeof cb === "function" ? cb(state.value.visibility) : cb;
+    const { disabled } = state.value.options;
+
+    if (value === "entering" || value === "visible") {
+      if (disabled || state.value.actions.length === 0) {
+        return;
+      }
     }
+
+    state.value.visibility = value;
   };
   const toggle = () => {
     setVisibility((vs) => {
@@ -84,7 +92,20 @@ export function useInternalState(options: KBarOptions, actions: Action[]) {
     }
   };
 
+  watchEffect(() => {
+    if (state.value.options.disabled) {
+      hide();
+    }
+  });
+
+  watchEffect(() => {
+    if (state.value.actions.length === 0) {
+      hide();
+    }
+  });
+
   const handler = ref<KBarHandler>({
+    setOptions,
     setSearch,
     setCurrentRootAction,
     registerActions,

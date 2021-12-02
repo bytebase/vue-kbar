@@ -20,6 +20,10 @@ function useToggleHandler() {
   const handler = useKBarHandler();
 
   useEventListener("keydown", (e) => {
+    if (state.value.options.disabled) {
+      return;
+    }
+
     const showing = state.value.visibility !== "hidden";
     if (
       (e.metaKey || e.ctrlKey) &&
@@ -114,6 +118,10 @@ function useShortcuts() {
   let lastKeyStrokeTime = 0;
 
   useEventListener("keydown", (event) => {
+    if (state.value.options.disabled) {
+      return;
+    }
+
     const key = event.key?.toLowerCase();
 
     if (shouldRejectKeystrokes() || event.metaKey || key === "shift") {

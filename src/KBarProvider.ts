@@ -1,4 +1,4 @@
-import { defineComponent, provide, h, PropType } from "vue";
+import { defineComponent, provide, h, PropType, watch } from "vue";
 import { Action } from "./types";
 import { InternalEvents } from "./InternalEvents";
 import { useInternalState } from "./useInternalState";
@@ -6,6 +6,7 @@ import { KBarOptions } from ".";
 
 export const DEFAULT_OPTIONS: KBarOptions = {
   placeholder: "Type a command or search…",
+  disabled: false,
 };
 
 export default defineComponent({
@@ -21,14 +22,23 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const options = {
-      ...DEFAULT_OPTIONS,
-      ...props.options,
-    };
-
     const { state, handler, matches } = useInternalState(
-      options,
+      {
+        ...DEFAULT_OPTIONS,
+        ...props.options,
+      },
       props.actions
+    );
+
+    watch(
+      () => props.options,
+      () => {
+        handler.value.setOptions({
+          ...DEFAULT_OPTIONS,
+          ...props.options,
+        });
+      },
+      { deep: true }
     );
 
     provide("k-bar-state", state);

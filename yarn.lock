@@ -3948,7 +3948,7 @@ vue-tsc@^0.29.8:
     "@volar/shared" "0.29.8"
     vscode-vue-languageservice "0.29.8"
 
-vue@^3.2.19, vue@^3.2.23:
+vue@^3.2.19:
   version "3.2.23"
   resolved "https://registry.npmmirror.com/vue/download/vue-3.2.23.tgz"
   integrity sha512-MGp9JZC37lzGhwSu6c1tQxrQbXbw7XKFqtYh7SFwNrNK899FPxGAHwSHMZijMChTSC3uZrD2BGO/3EHOgMJ0cw==

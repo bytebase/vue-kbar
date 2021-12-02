@@ -1,4 +1,4 @@
-import { MaybeRef } from "@vueuse/shared";
+import { MaybeRef } from "./utils";
 import { onUnmounted, ref, shallowRef, watchEffect } from "vue";
 import { Action } from "./types";
 import { useKBarHandler } from "./useKBarHandler";

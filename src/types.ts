@@ -38,6 +38,7 @@ export interface KBarState {
 export type UpdateCallback<T> = (curr: T) => T;
 
 export interface KBarHandler {
+  setOptions: (options: KBarOptions) => void;
   setSearch: (search: string) => void;
   registerActions: (actions: Action[], prepend?: boolean) => () => void; // returns a function to unregister
   setCurrentRootAction: (actionId: ActionId | null | undefined) => void;
@@ -64,5 +65,6 @@ export interface KBarMatches {
 }
 
 export interface KBarOptions {
-  placeholder: string;
+  placeholder?: string;
+  disabled?: boolean;
 }

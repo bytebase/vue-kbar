@@ -1,5 +1,5 @@
 <template>
-  <KBarProvider :actions="initialActions">
+  <KBarProvider :actions="initialActions" :options="{ disabled }">
     <KBarPortal>
       <KBarPositioner>
         <KBarAnimator
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import DefaultTheme from "vitepress/theme";
 const { Layout } = DefaultTheme;
 import {
@@ -157,8 +157,13 @@ export default defineComponent({
         })
       );
     }
+
+    const disabled = ref(false);
+    window.__kbar_disabled = disabled;
+
     return {
       initialActions,
+      disabled,
     };
   },
 });
