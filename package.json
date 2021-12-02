@@ -1,7 +1,8 @@
 {
   "name": "@bytebase/vue-kbar",
   "version": "0.1.0",
-  "license": "MIT",
+  "author": "Jim Liu <lj@bytebase.com>",
+  "license": "Apache-2.0",
   "module": "dist/index.es.js",
   "main": "dist/index.umd.js",
   "typings": "dist_types/index.d.ts",
@@ -42,5 +43,14 @@
   },
   "peerDependencies": {
     "vue": "^3.2.23"
+  },
+  "keywords": [
+    "command bar",
+    "command palette",
+    "kbar"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bytebase/vue-kbar.git"
   }
 }
