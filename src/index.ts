@@ -8,7 +8,9 @@ import { useKBarState } from "./useKBarState";
 import { useKBarHandler } from "./useKBarHandler";
 import { useKBarMatches } from "./useKBarMatches";
 import { useRegisterActions } from "./useRegisterActions";
-import { createAction } from "./action";
+import { defineAction } from "./action";
+
+const createAction = defineAction; // for legacy compatibility
 
 export * from "./types";
 export {
@@ -22,5 +24,6 @@ export {
   useKBarHandler,
   useKBarMatches,
   useRegisterActions,
+  defineAction,
   createAction,
 };
