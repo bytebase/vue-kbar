@@ -83,9 +83,13 @@ function performMatch(actions: ActionImpl[], search: string): ActionImpl[] {
   if (!search.trim()) {
     return actions;
   }
+  const words = search.split(/\s+/g);
 
-  const results = matchSorter(actions, search, {
-    keys: ["name", "keywords", "subtitle"],
-  });
+  const results = words.reduce((items, word) => {
+    return matchSorter(items, word, {
+      keys: ["name", "keywords", "subtitle"],
+    });
+  }, actions);
+
   return results;
 }

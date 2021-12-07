@@ -149,11 +149,12 @@ export default defineComponent({
       while (str.length < len) str = pad + str;
       return str.substr(str.length - len);
     }
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 200; i++) {
       initialActions.push(
         createAction({
-          name: `Fake Action #${paddingLeft(i + 1, 2, "0")}`,
+          name: `Fake Action #${paddingLeft(i + 1, 3, "0")}`,
           section: "Fake",
+          keywords: ["fff"],
         })
       );
     }

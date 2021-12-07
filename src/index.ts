@@ -7,6 +7,7 @@ import KBarResults from "./KBarResults.vue";
 import { useKBarState } from "./useKBarState";
 import { useKBarHandler } from "./useKBarHandler";
 import { useKBarMatches } from "./useKBarMatches";
+import { useKBar } from "./useKBar";
 import { useRegisterActions } from "./useRegisterActions";
 import { defineAction } from "./action";
 
@@ -23,6 +24,7 @@ export {
   useKBarState,
   useKBarHandler,
   useKBarMatches,
+  useKBar,
   useRegisterActions,
   defineAction,
   createAction,
