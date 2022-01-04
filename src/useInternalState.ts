@@ -1,6 +1,7 @@
 import { Ref, ref, watch, watchEffect } from "vue";
 import { ActionImpl, KBarEventsMap, KBarOptions } from ".";
 import { ActionManager } from "./action";
+import { EventEmitter } from "./EventEmitter";
 import {
   Action,
   ActionId,
@@ -20,6 +21,7 @@ export function useInternalState(options: KBarOptions, actions: Ref<Action[]>) {
     activeIndex: 0,
     visibility: "hidden",
   });
+  const events = ref(new EventEmitter<KBarEventsMap>());
   const actionManager = new ActionManager();
 
   const setOptions = (options: KBarOptions) => {
@@ -27,6 +29,7 @@ export function useInternalState(options: KBarOptions, actions: Ref<Action[]>) {
   };
   const setSearch = (search: string): void => {
     state.value.search = search;
+    events.value.emit("queryChange", search);
   };
   const setCurrentRootAction = (
     actionId: ActionId | null | undefined
@@ -50,6 +53,10 @@ export function useInternalState(options: KBarOptions, actions: Ref<Action[]>) {
     } else {
       state.value.activeIndex = cb;
     }
+    events.value.emit(
+      "selectAction",
+      state.value.actions[state.value.activeIndex]
+    );
   };
   const setVisibility = (cb: UpdateCallback<VisualState> | VisualState) => {
     const value = typeof cb === "function" ? cb(state.value.visibility) : cb;
@@ -62,6 +69,13 @@ export function useInternalState(options: KBarOptions, actions: Ref<Action[]>) {
     }
 
     state.value.visibility = value;
+
+    if (value === "visible") {
+      events.value.emit("open");
+    }
+    if (value === "hidden") {
+      events.value.emit("close");
+    }
   };
   const toggle = () => {
     setVisibility((vs) => {
@@ -86,6 +100,7 @@ export function useInternalState(options: KBarOptions, actions: Ref<Action[]>) {
     if (action.perform) {
       action.perform(action);
       handler.value.hide();
+      events.value.emit("performAction", action);
     } else {
       handler.value.setCurrentRootAction(action.id);
       handler.value.setSearch("");
@@ -132,5 +147,6 @@ export function useInternalState(options: KBarOptions, actions: Ref<Action[]>) {
     state,
     handler,
     matches,
+    events,
   };
 }

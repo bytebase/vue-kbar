@@ -1,8 +1,7 @@
-import { defineComponent, provide, h, PropType, watch } from "vue";
-import { Action } from "./types";
+import { defineComponent, provide, h, PropType, watch, computed } from "vue";
+import { Action, KBarOptions } from "./types";
 import { InternalEvents } from "./InternalEvents";
 import { useInternalState } from "./useInternalState";
-import { KBarOptions } from ".";
 
 export const DEFAULT_OPTIONS: KBarOptions = {
   placeholder: "Type a command or search…",
@@ -22,12 +21,12 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { state, handler, matches } = useInternalState(
+    const { state, handler, matches, events } = useInternalState(
       {
         ...DEFAULT_OPTIONS,
         ...props.options,
       },
-      props.actions
+      computed(() => props.actions)
     );
 
     watch(
@@ -44,6 +43,7 @@ export default defineComponent({
     provide("k-bar-state", state);
     provide("k-bar-handler", handler);
     provide("k-bar-matches", matches);
+    provide("k-bar-events", events);
   },
   render() {
     return [this.$slots.default?.(), h(InternalEvents)];

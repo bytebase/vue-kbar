@@ -9,6 +9,7 @@ import { useKBarHandler } from "./useKBarHandler";
 import { useKBarMatches } from "./useKBarMatches";
 import { useKBar } from "./useKBar";
 import { useRegisterActions } from "./useRegisterActions";
+import { useKBarEvents, useKBarEvent, useKBarEventOnce } from "./useKBarEvents";
 import { defineAction } from "./action";
 
 const createAction = defineAction; // for legacy compatibility
@@ -26,6 +27,9 @@ export {
   useKBarMatches,
   useKBar,
   useRegisterActions,
+  useKBarEvents,
+  useKBarEvent,
+  useKBarEventOnce,
   defineAction,
   createAction,
 };

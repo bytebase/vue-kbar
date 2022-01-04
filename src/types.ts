@@ -1,4 +1,5 @@
 import { Ref } from "vue";
+import { EventEmitter } from "./EventEmitter";
 
 export type MaybeRef<T> = T | Ref<T>;
 
@@ -83,3 +84,13 @@ export interface KBarOptions {
   disabled?: boolean;
   compare?: CompareFn;
 }
+
+export type KBarEventsMap = {
+  open: undefined;
+  close: undefined;
+  queryChange: string;
+  selectAction: ActionImpl;
+  performAction: ActionImpl;
+};
+
+export type KBarEvents = EventEmitter<KBarEventsMap>;
