@@ -139,17 +139,16 @@ function useShortcuts() {
     const bufferString = buffer.join("");
 
     const { actions } = state.value;
-    for (let i = 0; i < actions.length; i++) {
-      const action = actions[i];
+    const action = actions.find((action) => {
       if (!action.shortcut || action.shortcut.length === 0) {
-        continue;
+        return false;
       }
-      if (action.shortcut.join("") === bufferString) {
-        event.preventDefault();
-        handler.value.performAction(action);
-        buffer.length = 0;
-        break;
-      }
+      return action.shortcut.join("") === bufferString;
+    });
+    if (action) {
+      event.preventDefault();
+      handler.value.performAction(action);
+      buffer.length = 0;
     }
   });
 

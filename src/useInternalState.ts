@@ -1,5 +1,5 @@
-import { ref, watchEffect } from "vue";
-import { ActionImpl, KBarOptions } from ".";
+import { Ref, ref, watch, watchEffect } from "vue";
+import { ActionImpl, KBarEventsMap, KBarOptions } from ".";
 import { ActionManager } from "./action";
 import {
   Action,
@@ -11,7 +11,7 @@ import {
 } from "./types";
 import { useInternalMatches } from "./useInternalMatches";
 
-export function useInternalState(options: KBarOptions, actions: Action[]) {
+export function useInternalState(options: KBarOptions, actions: Ref<Action[]>) {
   const state = ref<KBarState>({
     options,
     search: "",
@@ -118,7 +118,15 @@ export function useInternalState(options: KBarOptions, actions: Action[]) {
   });
   const matches = useInternalMatches(state);
 
-  registerActions(actions);
+  let unregister = registerActions(actions.value);
+  watch(
+    actions,
+    (actions) => {
+      unregister();
+      unregister = registerActions(actions);
+    },
+    { deep: true }
+  );
 
   return {
     state,

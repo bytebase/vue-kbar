@@ -1,5 +1,5 @@
 import { computed, Ref, ref, watchEffect } from "vue";
-import { ActionImpl, KBarState, KBarMatches } from "./types";
+import { ActionImpl, KBarState, KBarMatches, CompareFn } from "./types";
 import { useThrottle } from "@vueuse/core";
 import { matchSorter } from "match-sorter";
 
@@ -47,12 +47,14 @@ export function useInternalMatches(state: Ref<KBarState>) {
     actions: deepActions.value,
     search: state.value.search,
     rootActionId: state.value.currentRootActionId,
+    compare: state.value.options.compare,
   }));
   const throttledSearchOptions = useThrottle(searchOptions, 100);
 
   watchEffect(() => {
-    const { actions, search, rootActionId } = throttledSearchOptions.value;
-    const results = performMatch(actions, search);
+    const { actions, search, rootActionId, compare } =
+      throttledSearchOptions.value;
+    const results = performMatch(actions, search, compare);
     const grouped = groupMatches(results);
     matches.value.results = grouped;
     matches.value.rootActionId = rootActionId;
@@ -79,15 +81,24 @@ function groupMatches(results: ActionImpl[]): KBarMatches["results"] {
   return grouped;
 }
 
-function performMatch(actions: ActionImpl[], search: string): ActionImpl[] {
+function performMatch(
+  actions: ActionImpl[],
+  search: string,
+  compare?: CompareFn
+): ActionImpl[] {
   if (!search.trim()) {
-    return actions;
+    const results = actions.map((item, index) => ({ item, index }));
+    if (compare) {
+      results.sort(compare);
+    }
+    return results.map(({ item }) => item);
   }
   const words = search.split(/\s+/g);
 
   const results = words.reduce((items, word) => {
     return matchSorter(items, word, {
       keys: ["name", "keywords", "subtitle"],
+      baseSort: compare,
     });
   }, actions);
 

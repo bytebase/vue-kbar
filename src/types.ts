@@ -1,3 +1,7 @@
+import { Ref } from "vue";
+
+export type MaybeRef<T> = T | Ref<T>;
+
 export type ActionId = string;
 
 export interface Action<T = any> {
@@ -64,7 +68,18 @@ export interface KBarMatches {
   rootActionId: string | null | undefined;
 }
 
+export type IndexedItem<T> = {
+  index: number;
+  item: T;
+};
+
+export type CompareFn = (
+  a: IndexedItem<ActionImpl>,
+  b: IndexedItem<ActionImpl>
+) => number;
+
 export interface KBarOptions {
   placeholder?: string;
   disabled?: boolean;
+  compare?: CompareFn;
 }
