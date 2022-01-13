@@ -2,9 +2,14 @@ import { useEventListener } from "@vueuse/core";
 import { defineComponent, ref, watch, watchEffect } from "vue";
 import { useKBarHandler, useKBarState } from ".";
 
+const isClient = typeof window !== "undefined";
+
 export const InternalEvents = defineComponent({
   name: "KBarInternalEvents",
   setup() {
+    if (!isClient) {
+      return;
+    }
     useToggleHandler();
     useFocusHandler();
     useDocumentLock();
