@@ -21,7 +21,7 @@ export class ActionManager {
         );
       }
       if (this.map.has(action.id)) {
-        console.warn(`Duplicated action id "${action.id}".`);
+        this._updateAction(action);
         continue;
       }
 
@@ -49,6 +49,12 @@ export class ActionManager {
       }
     }
     return [...this.actions];
+  }
+
+  _updateAction(action: Action) {
+    const impl = this.map.get(action.id);
+    if (!impl) return;
+    Object.assign(impl, action);
   }
 
   _createActionImpl(action: Action): ActionImpl {

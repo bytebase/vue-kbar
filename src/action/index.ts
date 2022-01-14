@@ -1,4 +1,4 @@
 import { ActionManager } from "./ActionManager";
-import { createAction } from "./createAction";
+import { defineAction } from "./defineAction";
 
-export { ActionManager, createAction };
+export { ActionManager, defineAction };

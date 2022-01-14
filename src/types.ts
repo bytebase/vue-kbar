@@ -1,3 +1,8 @@
+import { Ref } from "vue";
+import { EventEmitter } from "./EventEmitter";
+
+export type MaybeRef<T> = T | Ref<T>;
+
 export type ActionId = string;
 
 export interface Action<T = any> {
@@ -38,6 +43,7 @@ export interface KBarState {
 export type UpdateCallback<T> = (curr: T) => T;
 
 export interface KBarHandler {
+  setOptions: (options: KBarOptions) => void;
   setSearch: (search: string) => void;
   registerActions: (actions: Action[], prepend?: boolean) => () => void; // returns a function to unregister
   setCurrentRootAction: (actionId: ActionId | null | undefined) => void;
@@ -63,6 +69,28 @@ export interface KBarMatches {
   rootActionId: string | null | undefined;
 }
 
+export type IndexedItem<T> = {
+  index: number;
+  item: T;
+};
+
+export type CompareFn = (
+  a: IndexedItem<ActionImpl>,
+  b: IndexedItem<ActionImpl>
+) => number;
+
 export interface KBarOptions {
-  placeholder: string;
+  placeholder?: string;
+  disabled?: boolean;
+  compare?: CompareFn;
 }
+
+export type KBarEventsMap = {
+  open: undefined;
+  close: undefined;
+  queryChange: string;
+  selectAction: ActionImpl;
+  performAction: ActionImpl;
+};
+
+export type KBarEvents = EventEmitter<KBarEventsMap>;
