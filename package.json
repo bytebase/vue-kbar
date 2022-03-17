@@ -1,6 +1,6 @@
 {
   "name": "@bytebase/vue-kbar",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "Jim Liu <lj@bytebase.com>",
   "license": "SEE LICENSE IN LICENSE.md",
   "module": "dist/index.es.js",
