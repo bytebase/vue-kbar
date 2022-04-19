@@ -15,15 +15,20 @@ function getMainSidebar() {
       text: "Introduction",
       children: [
         { text: "What is vue-kbar", link: "/" },
-        { text: "Getting Started", link: "/intro/getting-started" },
+        { text: "Getting started", link: "/intro/getting-started" },
       ],
     },
     {
       text: "Advanced",
       children: [
-        { text: "Nested Actions", link: "/advanced/nested-actions" },
-        { text: "Dynamic Actions", link: "/advanced/dynamic-actions" },
-        { text: "Enable / Disable kbar", link: "/advanced/enable-disable-kbar" },
+        { text: "Dynamic actions", link: "/advanced/dynamic-actions" },
+        { text: "Sorting actions", link: "/advanced/sorting-actions" },
+        { text: "Nested actions", link: "/advanced/nested-actions" },
+        {
+          text: "Enable / disable kbar",
+          link: "/advanced/enable-disable-kbar",
+        },
+        { text: "Control kbar manually", link: "/advanced/control-kbar-manually" },
       ],
     },
   ];

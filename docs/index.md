@@ -1,10 +1,10 @@
 ---
-title: vue-kbar
+title: Introduction
 ---
 
-# @bytebase/vue-kbar
+# What is vue-kbar
 
-Extensible command+k interface for Vue 3 applications. Inspired by [timc1/kbar](https://github.com/timc1/kbar).
+@bytebase/vue-kbar is an extensible command+k interface for Vue 3 applications. Inspired by [timc1/kbar](https://github.com/timc1/kbar).
 
 Press <kbd>cmd</kbd>+<kbd>k</kbd> (macOS) or <kbd>ctrl</kbd>+<kbd>k</kbd> (Linux / Windows) to try it out!
 

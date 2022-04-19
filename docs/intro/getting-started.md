@@ -1,20 +1,14 @@
----
-title: Getting Started
----
+# Getting started
 
-# 1. Install dependency
+## 1. Install dependency
 
 ```bash
-# npm install --save @bytebase/vue-kbar
+➜ npm install --save @bytebase/vue-kbar
 ```
 
-or if you are using yarn
+Feel free to use pnpm / yarn ... and other package management tools.
 
-```bash
-# yarn add @bytebase/vue-kbar
-```
-
-# 2. Import core components
+## 2. Import core components
 
 ```typescript
 // App.vue
@@ -28,7 +22,7 @@ import {
 } from "@bytebase/vue-kbar";
 ```
 
-# 3. Define global actions
+## 3. Define global actions
 
 ```typescript
 // App.vue
@@ -52,7 +46,7 @@ const globalActions = [
 ];
 ```
 
-# 4. Use core components
+## 4. Use core components
 
 You need to wrap your Vue app entrance by vue-kbar core components.
 
@@ -74,14 +68,14 @@ vue-kbar comes with no out-of-the-box styles. You may specify styles according t
 </KBarProvider>
 ```
 
-# 5. Implement a results renderer
+## 5. Implement a results renderer
 
 vue-kbar doesn't render results it self. You may render results with your components and styles.
 
 Here is a simple example of how to implement `<MyResultsRenderer />` above.
 
 ```html
-// MyResultsRenderer.vue
+<!-- MyResultsRenderer.vue -->
 <KBarResults
   :items="matches.results"
   :item-height="itemHeight"
@@ -123,43 +117,6 @@ export default {
     };
 
     return { matches, itemHeight };
-  },
-};
-```
-
-# 6. Register actions dynamically
-
-You may register actions dynamically by calling `useRegisterActions` in any descendant component of `<KBarProvider>`. This hook method is reactive and bound to the component's life cycle, so you don't need to refresh or unregister manually. Here is an example.
-
-```typescript
-// SomeComponent.vue
-
-import { useRegisterActions, defineAction } from "@bytebase/vue-kbar";
-
-export default {
-  name: "SomeComponent",
-  setup() {
-    // Maybe you've already used some auto-fetch stuff to
-    // update the `posts` automatically
-    const posts = useFetch("/your-api", [deps]);
-
-    // Mapping posts to actions as a computed
-    const actions = computed(() =>
-      posts.map((post) =>
-        defineAction({
-          id: `to-detail-${post.id}`,
-          name: post.title,
-          subtitle: post.abstract,
-          section: "Posts",
-          perform: () => router.push(`/post/${post.id}`),
-        })
-      )
-    );
-
-    // Dynamically register actions
-    // pass `prepend: true` to make them listed before global actions
-    // When `actions` changed, they will be automatically re-registered
-    useRegisterActions(actions, true);
   },
 };
 ```
