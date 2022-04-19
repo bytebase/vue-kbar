@@ -80,10 +80,4 @@ export default defineComponent({
   grid-auto-flow: column;
   gap: 4px;
 }
-.shortcut kbd {
-  padding: 4px 6px;
-  background: rgba(0 0 0 / 0.1);
-  border-radius: 4px;
-  font-size: 14px;
-}
 </style>

@@ -4,7 +4,7 @@
       <KBarPositioner style="z-index: 1000; background: var(--a3)">
         <KBarAnimator
           style="
-            max-width: 600px;
+            max-width: calc(75 * var(--unit));
             width: 100%;
             background: var(--background);
             color: var(--foreground);
@@ -15,8 +15,8 @@
         >
           <KBarSearch
             style="
-              padding: 12px 16px;
-              font-size: 16px;
+              padding: calc(2 * var(--unit)) calc(2 * var(--unit));
+              font-size: calc(2 * var(--unit));
               width: 100%;
               box-sizing: border-box;
               outline: none;
@@ -60,6 +60,7 @@ export default defineComponent({
     RenderResults,
   },
   setup() {
+
     const initialActions = [
       {
         id: "foo",
