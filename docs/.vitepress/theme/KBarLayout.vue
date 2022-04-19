@@ -1,7 +1,7 @@
 <template>
   <KBarProvider :actions="initialActions" :options="{ disabled }">
     <KBarPortal>
-      <KBarPositioner>
+      <KBarPositioner style="z-index: 1000; background: var(--a3)">
         <KBarAnimator
           style="
             max-width: 600px;
@@ -66,14 +66,14 @@ export default defineComponent({
         name: "Foo",
         shortcut: ["f", "o", "o"],
         section: "Navigation",
-        perform: () => console.log("yahaha! you found foo!"),
+        perform: () => alert("yahaha! you found foo!"),
       },
       {
         id: "bar",
         name: "Bar",
         subtitle: "This action contains hidden keywords",
         keywords: "baz",
-        perform: () => console.log("bar"),
+        perform: () => alert("bar"),
       },
       createAction({
         id: "theme",
@@ -88,7 +88,7 @@ export default defineComponent({
         section: "",
         parent: "theme",
         perform: (actionImpl) => {
-          console.log("change theme to dark");
+          document.querySelector("html").classList.add("dark");
         },
       }),
       createAction({
@@ -98,7 +98,7 @@ export default defineComponent({
         section: "",
         parent: "theme",
         perform: (actionImpl) => {
-          console.log("change theme to light");
+          document.querySelector("html").classList.remove("dark");
         },
       }),
 
@@ -169,15 +169,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-:root {
-  --background: rgb(252 252 252);
-  --a1: rgba(0 0 0 / 0.05);
-  --a2: rgba(0 0 0 / 0.1);
-  --foreground: rgb(28 28 29);
-  --shadow: 0px 6px 20px rgb(0 0 0 / 20%);
-
-  --unit: 8px;
-}
-</style>
