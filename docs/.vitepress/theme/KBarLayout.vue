@@ -1,5 +1,8 @@
 <template>
-  <KBarProvider :actions="initialActions" :options="{ disabled }">
+  <KBarProvider
+    :actions="initialActions"
+    :options="{ disabled, compare: compareAction }"
+  >
     <KBarPortal>
       <KBarPositioner style="z-index: 1000; background: var(--a3)">
         <KBarAnimator
@@ -37,16 +40,20 @@
 <script>
 import { defineComponent, ref } from "vue";
 import DefaultTheme from "vitepress/theme";
-const { Layout } = DefaultTheme;
+import { useRouter } from "vitepress";
+import slug from "slug";
 import {
   KBarProvider,
   KBarPortal,
   KBarPositioner,
   KBarAnimator,
   KBarSearch,
-  createAction,
+  defineAction,
 } from "../../../src";
 import RenderResults from "./RenderResults.vue";
+import { getMainSidebar } from "../toc.ts";
+
+const { Layout } = DefaultTheme;
 
 export default defineComponent({
   name: "KBarLayout",
@@ -60,86 +67,69 @@ export default defineComponent({
     RenderResults,
   },
   setup() {
-    const initialActions = [
-      {
-        id: "foo",
-        name: "Foo",
-        shortcut: ["f", "o", "o"],
-        section: "Navigation",
-        perform: () => alert("yahaha! you found foo!"),
-      },
-      {
-        id: "bar",
-        name: "Bar",
-        subtitle: "This action contains hidden keywords",
-        keywords: "baz",
-        perform: () => alert("bar"),
-      },
+    const router = useRouter();
 
-      // {
-      //   id: "homeAction",
-      //   name: "Home",
-      //   shortcut: ["h"],
-      //   keywords: "back",
-      //   section: "Navigation",
-      //   perform: () => history.push("/"),
-      //   icon: <HomeIcon />,
-      //   subtitle: "Subtitles can help add more context.",
-      // },
-      // {
-      //   id: "docsAction",
-      //   name: "Docs",
-      //   shortcut: ["g", "d"],
-      //   keywords: "help",
-      //   section: "Navigation",
-      //   perform: () => history.push("/docs"),
-      // },
-      // {
-      //   id: "contactAction",
-      //   name: "Contact",
-      //   shortcut: ["c"],
-      //   keywords: "email hello",
-      //   section: "Navigation",
-      //   perform: () => window.open("mailto:timchang@hey.com", "_blank"),
-      // },
-      // {
-      //   id: "twitterAction",
-      //   name: "Twitter",
-      //   shortcut: ["t"],
-      //   keywords: "social contact dm",
-      //   section: "Navigation",
-      //   perform: () => window.open("https://twitter.com/timcchang", "_blank"),
-      // },
-      // createAction({
-      //   name: "Github",
-      //   shortcut: ["g", "h"],
-      //   keywords: "sourcecode",
-      //   section: "Navigation",
-      //   perform: () => window.open("https://github.com/timc1/kbar", "_blank"),
-      // }),
+    const docActions = getMainSidebar().flatMap((category) =>
+      category.children.map((page) =>
+        defineAction({
+          id: `kbar.documentation.${slug(page.text)}`,
+          name: page.text,
+          section: "Documentation",
+          perform: () => router.go(page.link),
+        })
+      )
+    );
+
+    const initialActions = [
+      defineAction({
+        id: "kbar.navigation.github",
+        name: 'GitHub',
+        shortcut: ["g", "h"],
+        keywords: "sourcecode",
+        section: "Navigation",
+        perform: () =>
+          window.open("https://github.com/bytebase/vue-kbar", "_blank"),
+      }),
+      ...docActions,
     ];
-    // function paddingLeft(str, len, pad = " ") {
-    //   str = "" + str;
-    //   while (str.length < len) str = pad + str;
-    //   return str.substr(str.length - len);
-    // }
-    // for (let i = 0; i < 200; i++) {
-    //   initialActions.push(
-    //     createAction({
-    //       name: `Fake Action #${paddingLeft(i + 1, 3, "0")}`,
-    //       section: "Fake",
-    //       keywords: ["fff"],
-    //     })
-    //   );
-    // }
 
     const disabled = ref(false);
     window.__kbar_disabled = disabled;
 
+    const compareAction = (a, b) => {
+      const ar = getActionRankingById(a.item);
+      const br = getActionRankingById(b.item);
+
+      // Sort by original index if they have same ranks.
+      if (ar === br) return a.index - b.index;
+
+      // Otherwise sort by ranking.
+      return ar - br;
+    };
+
     return {
       initialActions,
       disabled,
+      compareAction,
     };
   },
 });
+
+const ACTION_RANKINGS = [
+  "kbar.debug.",
+  "kbar.example.",
+  "kbar.navigation.",
+  "kbar.documentation.",
+  "kbar.preferences.",
+];
+
+function getActionRankingById(action) {
+  const rank = ACTION_RANKINGS.findIndex((prefix) =>
+    action.id.startsWith(prefix)
+  );
+  // non-specified namespaces should always rank behind specified ones.
+  if (rank < 0) return Infinity;
+
+  return rank;
+}
 </script>
