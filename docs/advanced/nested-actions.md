@@ -8,13 +8,13 @@ Nested actions are useful when you need to manage your actions as a tree or some
 
 ```typescript
 useRegisterActions([
-  createAction({
+  defineAction({
     id: "theme",
     name: "Change theme…",
     keywords: "interface color dark light",
     section: "Preferences",
   }),
-  createAction({
+  defineAction({
     id: "theme-dark",
     name: "Dark",
     keywords: "dark theme",
@@ -24,7 +24,7 @@ useRegisterActions([
       document.querySelector("html").classList.add("dark");
     },
   }),
-  createAction({
+  defineAction({
     id: "theme-light",
     name: "Light",
     keywords: "light theme",
@@ -42,16 +42,16 @@ See that `parent` field? It indicates which one the nested action belongs to.
 `name` and `keywords` of nested actions can also be searched by the input query. Pressing <kbd>backspace</kbd> when you navigated in a nested action leads you back to it's parent action.
 
 <script setup>
-import { useRegisterActions, createAction } from '../../src';
+import { useRegisterActions, defineAction } from '../../src';
 
 useRegisterActions([
-  createAction({
+  defineAction({
     id: "theme",
     name: "Change theme…",
     keywords: "interface color dark light",
     section: "Preferences",
   }),
-  createAction({
+  defineAction({
     id: "theme-dark",
     name: "Dark",
     keywords: "dark theme",
@@ -61,7 +61,7 @@ useRegisterActions([
       document.querySelector("html").classList.add("dark");
     },
   }),
-  createAction({
+  defineAction({
     id: "theme-light",
     name: "Light",
     keywords: "light theme",

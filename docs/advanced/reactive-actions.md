@@ -64,3 +64,29 @@ export default {
 Your dynamic actions registered by `useRegisterActions` can also be a static or reactive array.
 
 This hook method is reactive and it has been bound to the component's life cycle, so you don't need to re-register them when your component updated, or unregister manually when your component unmounted.
+
+Open kbar on the current page, then you'll see some "Example actions" dynamically registered on this page. But when you leave this page, they will no longer exist.
+
+<script setup>
+import { useRegisterActions, defineAction } from '../../src';
+
+function paddingLeft(str, len, pad = " ") {
+  str = "" + str;
+  while (str.length < len) str = pad + str;
+  return str.substr(str.length - len);
+}
+
+const dynamicActions = [];
+for (let i = 0; i < 5; i++) {
+  dynamicActions.push(
+    defineAction({
+      id: `kbar.example.example#${i}`,
+      name: `Example Action #${paddingLeft(i + 1, 2, "0")}`,
+      section: "Example",
+      perform: () => alert("Never mind, it's a example action"),
+    })
+  );
+}
+
+useRegisterActions(dynamicActions);
+</script>

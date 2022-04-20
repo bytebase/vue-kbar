@@ -11,8 +11,8 @@ export function getMainSidebar() {
       text: "Advanced",
       children: [
         { text: "Reactive actions", link: "/advanced/reactive-actions.html" },
-        { text: "Sorting actions", link: "/advanced/sorting-actions.html" },
         { text: "Nested actions", link: "/advanced/nested-actions.html" },
+        { text: "Sorting actions", link: "/advanced/sorting-actions.html" },
         {
           text: "Enable / disable kbar",
           link: "/advanced/enable-disable-kbar.html",
