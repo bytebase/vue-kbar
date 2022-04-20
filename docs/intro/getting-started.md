@@ -50,7 +50,7 @@ const globalActions = [
 
 You need to wrap your Vue app entrance by vue-kbar core components.
 
-vue-kbar comes with no out-of-the-box styles. You may specify styles according to your application's UI design. Here is an example of using [tailwindcss](https://tailwindcss.com/).
+vue-kbar comes with no out-of-the-box styles. You may specify styles according to your application's UI design. Here is an example using [tailwindcss](https://tailwindcss.com/).
 
 ```html
 <KBarProvider :actions="globalActions">
