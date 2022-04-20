@@ -42,6 +42,7 @@ import { defineComponent, ref } from "vue";
 import DefaultTheme from "vitepress/theme";
 import { useRouter } from "vitepress";
 import slug from "slug";
+import { storeToRefs } from "pinia";
 import {
   KBarProvider,
   KBarPortal,
@@ -50,6 +51,7 @@ import {
   KBarSearch,
   defineAction,
 } from "../../../src";
+import { useStore } from "../store.ts";
 import RenderResults from "./RenderResults.vue";
 import { getMainSidebar } from "../toc.ts";
 
@@ -67,6 +69,7 @@ export default defineComponent({
     RenderResults,
   },
   setup() {
+    const store = useStore();
     const router = useRouter();
 
     const docActions = getMainSidebar().flatMap((category) =>
@@ -83,7 +86,7 @@ export default defineComponent({
     const initialActions = [
       defineAction({
         id: "kbar.navigation.github",
-        name: 'GitHub',
+        name: "GitHub",
         shortcut: ["g", "h"],
         keywords: "sourcecode",
         section: "Navigation",
@@ -93,8 +96,7 @@ export default defineComponent({
       ...docActions,
     ];
 
-    const disabled = ref(false);
-    window.__kbar_disabled = disabled;
+    const { disabled } = storeToRefs(store);
 
     const compareAction = (a, b) => {
       const ar = getActionRankingById(a.item);

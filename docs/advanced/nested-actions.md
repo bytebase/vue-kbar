@@ -1,6 +1,6 @@
 # Nested actions
 
-:::info
+::: tip
 Open kbar on this page to have a try!
 :::
 

@@ -1,12 +1,14 @@
 <script setup>
 import {  watch } from "vue";
+import { storeToRefs } from 'pinia';
 import { useKBarState, useKBarHandler, useKBarMatches } from "../src";
+import { useStore } from "./.vitepress/store.ts";
 
 const state = useKBarState();
 const handler = useKBarHandler();
 const matches = useKBarMatches();
 
-const disabled = window.__kbar_disabled;
+const { disabled } = storeToRefs(useStore());
 </script>
 
 # hello
