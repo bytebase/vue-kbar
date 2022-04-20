@@ -5,6 +5,7 @@
    * --------------------------------------------------------------------- */
   --c-brand: #4f46e5;
   --c-brand-light: #a5b4fc;
+  --c-brand-dark: #3730a3;
 }
 
 html.dark {
@@ -25,6 +26,7 @@ html.dark {
 
   --c-brand: #a5b4fc;
   --c-brand-light: #4f46e5;
+  --c-brand-dark: #3730a3;
   
   /**
    * Shadows
