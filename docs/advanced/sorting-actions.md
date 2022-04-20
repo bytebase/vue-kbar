@@ -1,6 +1,6 @@
 # Sorting actions
 
-You probably want to sort your actions. Here's an example below
+We probably want to sort our actions. Here's an example below
 
 ```html
 <KBarProvider :actions="globalActions" :options="{ compare }">

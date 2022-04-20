@@ -24,11 +24,11 @@ const globalActions = computed(() => [
 ]);
 ```
 
-Wrap your action generation logic with `computed`. vue-kbar accepts reactive array (`Action[] | Ref<Action[]`>), thus makes your global actions reactive.
+Wrap our action generation logic with `computed`. vue-kbar accepts reactive array (`Action[] | Ref<Action[]`>), thus makes our global actions reactive.
 
 ## Dynamic actions
 
-You may register actions dynamically by calling `useRegisterActions` in any descendant component of `<KBarProvider>`. Here is an example.
+We may register actions dynamically by calling `useRegisterActions` in any descendant component of `<KBarProvider>`. Here is an example.
 
 ```typescript
 // SomeComponent.vue
@@ -37,9 +37,9 @@ import { useRegisterActions, defineAction } from "@bytebase/vue-kbar";
 export default {
   name: "SomeComponent",
   setup() {
-    // Maybe you've already used some auto-fetch stuff to
+    // Maybe we've already used some auto-fetch stuff to
     // update the `posts` automatically
-    const posts = useFetch("/your-api", [deps]);
+    const posts = useFetch("/some-api/post", [deps]);
 
     // Mapping posts to actions as a computed
     const actions = computed(() =>
@@ -61,11 +61,11 @@ export default {
 };
 ```
 
-Your dynamic actions registered by `useRegisterActions` can also be a static or reactive array.
+Our dynamic actions registered by `useRegisterActions` can also be a static or reactive array.
 
-This hook method is reactive and it has been bound to the component's life cycle, so you don't need to re-register them when your component updated, or unregister manually when your component unmounted.
+This hook method is reactive and it has been bound to the component's life cycle, so we don't need to re-register them when our component updated, or unregister manually when our component unmounted.
 
-Open kbar on the current page, then you'll see some "Example actions" dynamically registered on this page. But when you leave this page, they will no longer exist.
+Open kbar on the current page, then we'll see some "Example actions" dynamically registered on this page. But when we leave this page, they will no longer exist.
 
 <script setup>
 import { useRegisterActions, defineAction } from '../../src';

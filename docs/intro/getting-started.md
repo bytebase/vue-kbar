@@ -48,9 +48,9 @@ const globalActions = [
 
 ## 4. Use core components
 
-You need to wrap your Vue app entrance by vue-kbar core components.
+We need to wrap our Vue app entrance by vue-kbar core components.
 
-vue-kbar comes with no out-of-the-box styles. You may specify styles according to your application's UI design. Here is an example using [tailwindcss](https://tailwindcss.com/).
+vue-kbar comes with no out-of-the-box styles. We may specify styles according to our application's UI design. Here is an example using [tailwindcss](https://tailwindcss.com/).
 
 ```html
 <KBarProvider :actions="globalActions">
@@ -63,14 +63,14 @@ vue-kbar comes with no out-of-the-box styles. You may specify styles according t
     </KBarPositioner>
   </KBarPortal>
 
-  <!-- you application entrance here -->
+  <!-- our application entrance here -->
   <MyApp />
 </KBarProvider>
 ```
 
 ## 5. Implement a results renderer
 
-vue-kbar doesn't render results it self. You may render results with your components and styles.
+vue-kbar doesn't render results it self. We may render results with our components and styles.
 
 Here is a simple example of how to implement `<MyResultsRenderer />` above.
 
@@ -83,7 +83,7 @@ Here is a simple example of how to implement `<MyResultsRenderer />` above.
 >
   <!-- KBarResults creates a virtual list to manage mass of actions -->
   <!-- It also reacts to up/down/enter keystroke for activeIndex management -->
-  <!-- You still may use your own component if you really want to customize the result list -->
+  <!-- We still may use our own component if we really want to customize the result list -->
   <template #item="{ item, index, active }">
     <div v-if="typeof item === 'string'" class="section">
       <!-- string items are section headers -->

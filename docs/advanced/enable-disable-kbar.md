@@ -1,28 +1,21 @@
 # Enable / disable kbar
 
 <script setup>
-import {  watch } from "vue";
 import { storeToRefs } from 'pinia';
-import { useKBarState, useKBarHandler, useKBarMatches } from "../../src";
 import { useStore } from "../.vitepress/store.ts";
-
-const state = useKBarState();
-const handler = useKBarHandler();
-const matches = useKBarMatches();
 
 const { disabled } = storeToRefs(useStore());
 </script>
 
+We might want to disable our kbar temporarily (or permanently) sometimes. Here's an example
 
 ::: tip
+
 <p style="display: flex; align-items: center;">
-<label for="disabled">Try to disable kbar</label>
-<input name="disabled" type="checkbox" v-model="disabled" style="margin: 0; margin-left: var(--unit); margin-top: 2px;" />
+  <label for="disabled">Try to disable kbar</label>
+  <input name="disabled" type="checkbox" v-model="disabled" style="margin: 0; margin-left: var(--unit); margin-top: 2px;" />
 </p>
 :::
-
-You might want to disable your kbar temporarily (or permanently) sometimes. Here's an example
-
 ```html
 <KBarProvider :actions="globalActions" :options="{ disabled }">
   ...
