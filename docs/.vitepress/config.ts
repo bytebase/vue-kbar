@@ -2,6 +2,7 @@ import { defineConfig } from "vitepress";
 
 export default defineConfig({
   title: "@bytebase/vue-kbar",
+  description: "Extensible command+k interface for Vue 3 applications.",
   themeConfig: {
     sidebar: {
       "/": getMainSidebar(),
@@ -21,14 +22,17 @@ function getMainSidebar() {
     {
       text: "Advanced",
       children: [
-        { text: "Dynamic actions", link: "/advanced/dynamic-actions" },
+        { text: "Reactive actions", link: "/advanced/reactive-actions" },
         { text: "Sorting actions", link: "/advanced/sorting-actions" },
         { text: "Nested actions", link: "/advanced/nested-actions" },
         {
           text: "Enable / disable kbar",
           link: "/advanced/enable-disable-kbar",
         },
-        { text: "Control kbar manually", link: "/advanced/control-kbar-manually" },
+        {
+          text: "Control kbar manually",
+          link: "/advanced/control-kbar-manually",
+        },
       ],
     },
   ];
