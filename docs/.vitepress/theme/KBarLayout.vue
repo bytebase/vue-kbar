@@ -60,7 +60,6 @@ export default defineComponent({
     RenderResults,
   },
   setup() {
-
     const initialActions = [
       {
         id: "foo",
@@ -76,32 +75,6 @@ export default defineComponent({
         keywords: "baz",
         perform: () => alert("bar"),
       },
-      createAction({
-        id: "theme",
-        name: "Change theme…",
-        keywords: "interface color dark light",
-        section: "Preferences",
-      }),
-      createAction({
-        id: "theme-dark",
-        name: "Dark",
-        keywords: "dark theme",
-        section: "",
-        parent: "theme",
-        perform: (actionImpl) => {
-          document.querySelector("html").classList.add("dark");
-        },
-      }),
-      createAction({
-        id: "theme-light",
-        name: "Light",
-        keywords: "light theme",
-        section: "",
-        parent: "theme",
-        perform: (actionImpl) => {
-          document.querySelector("html").classList.remove("dark");
-        },
-      }),
 
       // {
       //   id: "homeAction",
@@ -145,20 +118,20 @@ export default defineComponent({
       //   perform: () => window.open("https://github.com/timc1/kbar", "_blank"),
       // }),
     ];
-    function paddingLeft(str, len, pad = " ") {
-      str = "" + str;
-      while (str.length < len) str = pad + str;
-      return str.substr(str.length - len);
-    }
-    for (let i = 0; i < 200; i++) {
-      initialActions.push(
-        createAction({
-          name: `Fake Action #${paddingLeft(i + 1, 3, "0")}`,
-          section: "Fake",
-          keywords: ["fff"],
-        })
-      );
-    }
+    // function paddingLeft(str, len, pad = " ") {
+    //   str = "" + str;
+    //   while (str.length < len) str = pad + str;
+    //   return str.substr(str.length - len);
+    // }
+    // for (let i = 0; i < 200; i++) {
+    //   initialActions.push(
+    //     createAction({
+    //       name: `Fake Action #${paddingLeft(i + 1, 3, "0")}`,
+    //       section: "Fake",
+    //       keywords: ["fff"],
+    //     })
+    //   );
+    // }
 
     const disabled = ref(false);
     window.__kbar_disabled = disabled;
