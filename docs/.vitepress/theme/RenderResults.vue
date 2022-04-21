@@ -52,7 +52,8 @@ export default defineComponent({
   padding: 8px 16px;
   font-size: 10px;
   text-transform: uppercase;
-  opacity: 0.5;
+  opacity: 0.8;
+  background-color: var(--a2);
 }
 .item {
   height: 60px;
