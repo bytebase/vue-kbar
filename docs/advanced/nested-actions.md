@@ -1,7 +1,7 @@
 # Nested actions
 
 ::: tip
-Open kbar on this page to have a try!
+Open kbar on this page and search "theme", "light" or "dark" to have a try!
 :::
 
 Nested actions are useful when we need to manage our actions as a tree or something like that. Here's an example of how the current page provides nested actions.
