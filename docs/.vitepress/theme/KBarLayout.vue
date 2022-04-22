@@ -33,12 +33,16 @@
       </KBarPositioner>
     </KBarPortal>
 
-    <Layout />
+    <Layout>
+      <template #navbar-search>
+        <DarkModeButton />
+      </template>
+    </Layout>
   </KBarProvider>
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watchEffect } from "vue";
 import DefaultTheme from "vitepress/theme";
 import { useRouter } from "vitepress";
 import slug from "slug";
@@ -53,6 +57,7 @@ import {
 } from "../../../src";
 import { useStore } from "../store.ts";
 import RenderResults from "./RenderResults.vue";
+import DarkModeButton from "./DarkModeButton.vue";
 import { getMainSidebar } from "../toc.ts";
 
 const { Layout } = DefaultTheme;
@@ -61,6 +66,7 @@ export default defineComponent({
   name: "KBarLayout",
   components: {
     Layout,
+    DarkModeButton,
     KBarProvider,
     KBarPortal,
     KBarPositioner,
