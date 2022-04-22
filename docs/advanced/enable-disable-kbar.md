@@ -9,7 +9,7 @@ const { disabled } = storeToRefs(useStore());
 
 We might want to disable our kbar temporarily (or permanently) sometimes. Here's an example
 
-::: tip
+::: tip Live demo
 
 <p style="display: flex; align-items: center;">
   <label for="disabled">Try to disable kbar</label>

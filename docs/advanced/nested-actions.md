@@ -1,6 +1,6 @@
 # Nested actions
 
-::: tip
+::: tip Live demo
 Open kbar on this page and search "theme", "light" or "dark" to have a try!
 :::
 
