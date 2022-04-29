@@ -34,18 +34,20 @@
 </template>
 
 <script lang="ts" setup>
-import { watchEffect } from "vue";
+import { onMounted, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "../store";
 
 const { darkMode } = storeToRefs(useStore());
 
-watchEffect(() => {
-  if (darkMode.value) {
-    document.querySelector("html").classList.add("dark");
-  } else {
-    document.querySelector("html").classList.remove("dark");
-  }
+onMounted(() => {
+  watchEffect(() => {
+    if (darkMode.value) {
+      document.querySelector("html").classList.add("dark");
+    } else {
+      document.querySelector("html").classList.remove("dark");
+    }
+  });
 });
 
 const toggle = () => {
