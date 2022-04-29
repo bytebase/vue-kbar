@@ -1,4 +1,4 @@
-# Dynamic actions
+# Reactive actions
 
 ## Global actions
 
