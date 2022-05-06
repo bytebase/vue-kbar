@@ -16,6 +16,7 @@ We might want to disable our kbar temporarily (or permanently) sometimes. Here's
   <input name="disabled" type="checkbox" v-model="disabled" style="margin: 0; margin-left: var(--unit); margin-top: 2px;" />
 </p>
 :::
+
 ```html
 <KBarProvider :actions="globalActions" :options="{ disabled }">
   ...
