@@ -1,0 +1,58 @@
+/** Base Styles */
+:root {
+  /**
+   * Colors
+   * --------------------------------------------------------------------- */
+  --c-brand: #4f46e5;
+  --c-brand-light: #a5b4fc;
+  --c-brand-dark: #3730a3;
+}
+
+html.dark {
+  /**
+   * Colors
+   * --------------------------------------------------------------------- */
+
+  --c-white: #080808;
+  --c-white-dark: #000000;
+  --c-black: #ffffff;
+
+  --c-divider-light: rgba(195, 195, 188, 0.12);
+  --c-divider-dark: rgba(171, 171, 168, 0.48);
+
+  --c-text-light-1: rgba(175, 193, 211, 1);
+  --c-text-light-2: rgba(125, 154, 184, 1);
+  --c-text-light-3: rgba(72, 91, 111, 1);
+
+  --c-brand: #a5b4fc;
+  --c-brand-light: #4f46e5;
+  --c-brand-dark: #3730a3;
+
+  /**
+   * Shadows
+   * --------------------------------------------------------------------- */
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-2: 0 3px 12px rgba(0, 0, 0, 0.07), 0 1px 4px rgba(0, 0, 0, 0.07);
+  --shadow-3: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-4: 0 14px 44px rgba(0, 0, 0, 0.12), 0 3px 9px rgba(0, 0, 0, 0.12);
+  --shadow-5: 0 18px 56px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.16);
+}
+
+/** Fallback Styles */
+html.dark {
+  --c-divider: var(--c-divider-light);
+
+  --c-text: var(--c-text-light-1);
+  --c-text-light: var(--c-text-light-2);
+  --c-text-lighter: var(--c-text-light-3);
+
+  --c-bg: var(--c-white);
+  --c-bg-accent: var(--c-white-dark);
+
+  --code-line-height: 24px;
+  --code-font-family: var(--font-family-mono);
+  --code-font-size: 14px;
+  --code-inline-bg-color: rgba(27, 31, 35, 0.05);
+  --code-bg-color: #282c34;
+}

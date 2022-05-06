@@ -52,7 +52,8 @@ export default defineComponent({
   padding: 8px 16px;
   font-size: 10px;
   text-transform: uppercase;
-  opacity: 0.5;
+  opacity: 0.8;
+  background-color: var(--a2);
 }
 .item {
   height: 60px;
@@ -79,11 +80,5 @@ export default defineComponent({
   display: grid;
   grid-auto-flow: column;
   gap: 4px;
-}
-.shortcut kbd {
-  padding: 4px 6px;
-  background: rgba(0 0 0 / 0.1);
-  border-radius: 4px;
-  font-size: 14px;
 }
 </style>

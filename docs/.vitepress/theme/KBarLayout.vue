@@ -1,10 +1,13 @@
 <template>
-  <KBarProvider :actions="initialActions" :options="{ disabled }">
+  <KBarProvider
+    :actions="initialActions"
+    :options="{ disabled, compare: compareAction }"
+  >
     <KBarPortal>
-      <KBarPositioner>
+      <KBarPositioner style="z-index: 1000; background: var(--a3)">
         <KBarAnimator
           style="
-            max-width: 600px;
+            max-width: calc(75 * var(--unit));
             width: 100%;
             background: var(--background);
             color: var(--foreground);
@@ -15,8 +18,8 @@
         >
           <KBarSearch
             style="
-              padding: 12px 16px;
-              font-size: 16px;
+              padding: calc(2 * var(--unit)) calc(2 * var(--unit));
+              font-size: calc(2 * var(--unit));
               width: 100%;
               box-sizing: border-box;
               outline: none;
@@ -30,28 +33,40 @@
       </KBarPositioner>
     </KBarPortal>
 
-    <Layout />
+    <Layout>
+      <template #navbar-search>
+        <DarkModeButton />
+      </template>
+    </Layout>
   </KBarProvider>
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watchEffect } from "vue";
 import DefaultTheme from "vitepress/theme";
-const { Layout } = DefaultTheme;
+import { useRouter } from "vitepress";
+import slug from "slug";
+import { storeToRefs } from "pinia";
 import {
   KBarProvider,
   KBarPortal,
   KBarPositioner,
   KBarAnimator,
   KBarSearch,
-  createAction,
+  defineAction,
 } from "../../../src";
+import { useStore } from "../store.ts";
 import RenderResults from "./RenderResults.vue";
+import DarkModeButton from "./DarkModeButton.vue";
+import { getMainSidebar } from "../toc.ts";
+
+const { Layout } = DefaultTheme;
 
 export default defineComponent({
   name: "KBarLayout",
   components: {
     Layout,
+    DarkModeButton,
     KBarProvider,
     KBarPortal,
     KBarPositioner,
@@ -60,124 +75,69 @@ export default defineComponent({
     RenderResults,
   },
   setup() {
-    const initialActions = [
-      {
-        id: "foo",
-        name: "Foo",
-        shortcut: ["f", "o", "o"],
-        section: "Navigation",
-        perform: () => console.log("yahaha! you found foo!"),
-      },
-      {
-        id: "bar",
-        name: "Bar",
-        subtitle: "This action contains hidden keywords",
-        keywords: "baz",
-        perform: () => console.log("bar"),
-      },
-      createAction({
-        id: "theme",
-        name: "Change theme…",
-        keywords: "interface color dark light",
-        section: "Preferences",
-      }),
-      createAction({
-        id: "theme-dark",
-        name: "Dark",
-        keywords: "dark theme",
-        section: "",
-        parent: "theme",
-        perform: (actionImpl) => {
-          console.log("change theme to dark");
-        },
-      }),
-      createAction({
-        id: "theme-light",
-        name: "Light",
-        keywords: "light theme",
-        section: "",
-        parent: "theme",
-        perform: (actionImpl) => {
-          console.log("change theme to light");
-        },
-      }),
+    const store = useStore();
+    const router = useRouter();
 
-      // {
-      //   id: "homeAction",
-      //   name: "Home",
-      //   shortcut: ["h"],
-      //   keywords: "back",
-      //   section: "Navigation",
-      //   perform: () => history.push("/"),
-      //   icon: <HomeIcon />,
-      //   subtitle: "Subtitles can help add more context.",
-      // },
-      // {
-      //   id: "docsAction",
-      //   name: "Docs",
-      //   shortcut: ["g", "d"],
-      //   keywords: "help",
-      //   section: "Navigation",
-      //   perform: () => history.push("/docs"),
-      // },
-      // {
-      //   id: "contactAction",
-      //   name: "Contact",
-      //   shortcut: ["c"],
-      //   keywords: "email hello",
-      //   section: "Navigation",
-      //   perform: () => window.open("mailto:timchang@hey.com", "_blank"),
-      // },
-      // {
-      //   id: "twitterAction",
-      //   name: "Twitter",
-      //   shortcut: ["t"],
-      //   keywords: "social contact dm",
-      //   section: "Navigation",
-      //   perform: () => window.open("https://twitter.com/timcchang", "_blank"),
-      // },
-      // createAction({
-      //   name: "Github",
-      //   shortcut: ["g", "h"],
-      //   keywords: "sourcecode",
-      //   section: "Navigation",
-      //   perform: () => window.open("https://github.com/timc1/kbar", "_blank"),
-      // }),
-    ];
-    function paddingLeft(str, len, pad = " ") {
-      str = "" + str;
-      while (str.length < len) str = pad + str;
-      return str.substr(str.length - len);
-    }
-    for (let i = 0; i < 200; i++) {
-      initialActions.push(
-        createAction({
-          name: `Fake Action #${paddingLeft(i + 1, 3, "0")}`,
-          section: "Fake",
-          keywords: ["fff"],
+    const docActions = getMainSidebar().flatMap((category) =>
+      category.children.map((page) =>
+        defineAction({
+          id: `kbar.documentation.${slug(page.text)}`,
+          name: page.text,
+          section: "Documentation",
+          perform: () => router.go(page.link),
         })
-      );
-    }
+      )
+    );
 
-    const disabled = ref(false);
-    window.__kbar_disabled = disabled;
+    const initialActions = [
+      defineAction({
+        id: "kbar.navigation.github",
+        name: "GitHub",
+        shortcut: ["g", "h"],
+        keywords: "sourcecode",
+        section: "Navigation",
+        perform: () =>
+          window.open("https://github.com/bytebase/vue-kbar", "_blank"),
+      }),
+      ...docActions,
+    ];
+
+    const { disabled } = storeToRefs(store);
+
+    const compareAction = (a, b) => {
+      const ar = getActionRankingById(a.item);
+      const br = getActionRankingById(b.item);
+
+      // Sort by original index if they have same ranks.
+      if (ar === br) return a.index - b.index;
+
+      // Otherwise sort by ranking.
+      return ar - br;
+    };
 
     return {
       initialActions,
       disabled,
+      compareAction,
     };
   },
 });
-</script>
 
-<style>
-:root {
-  --background: rgb(252 252 252);
-  --a1: rgba(0 0 0 / 0.05);
-  --a2: rgba(0 0 0 / 0.1);
-  --foreground: rgb(28 28 29);
-  --shadow: 0px 6px 20px rgb(0 0 0 / 20%);
+const ACTION_RANKINGS = [
+  "kbar.debug.",
+  "kbar.example.",
+  "kbar.navigation.",
+  "kbar.documentation.",
+  "kbar.preferences.",
+];
 
-  --unit: 8px;
+function getActionRankingById(action) {
+  const rank = ACTION_RANKINGS.findIndex((prefix) =>
+    action.id.startsWith(prefix)
+  );
+  // non-specified namespaces should always rank behind specified ones.
+  if (rank < 0) return Infinity;
+
+  return rank;
 }
-</style>
+</script>

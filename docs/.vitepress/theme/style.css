@@ -1,0 +1,69 @@
+@import url(./theme.css);
+
+:root {
+  --background: var(--c-white);
+  --a1: rgba(0 0 0 / 0.05);
+  --a2: rgba(0 0 0 / 0.1);
+  --a3: rgba(0 0 0 / 0.3);
+  --foreground: var(--c-text-light-1);
+  --shadow: 0px 6px 20px rgb(0 0 0 / 20%);
+  --unit: 8px;
+
+  --c-warning: rgba(255, 229, 100, 0.3);
+  --c-danger: rgba(255, 230, 230, 1);
+}
+
+html.dark {
+  --a1: rgba(255 255 255 / 0.05);
+  --a2: rgba(255 255 255 / 0.1);
+  --a3: rgba(255 255 255 / 0.15);
+  --shadow: 0px 6px 20px rgb(0 0 0 / 80%);
+  
+  --c-warning: rgba(166, 142, 25, 0.2);
+  --c-danger: rgba(191, 161, 161, 1);
+}
+
+kbd {
+  font-family: monospace;
+  padding: calc(var(--unit) * 0.25) calc(var(--unit) * 0.5);
+  background: var(--a2);
+  border-radius: calc(var(--unit) * 0.5);
+  color: var(--foreground);
+  font-size: 14px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  border-radius: 0.375rem;
+  border-width: 1px;
+  border-color: transparent;
+  background-color: #4f46e5;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #3730a3;
+}
+
+.custom-block.tip {
+  background-color: var(--a1);
+}
+.custom-block.info {
+  background-color: var(--a1);
+}
+.custom-block.details {
+  background-color: var(--a1);
+}
+.custom-block.warning {
+  background-color: var(--c-warning);
+}
+.custom-block.danger {
+  background-color: var(--c-danger);
+}

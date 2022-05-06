@@ -5,6 +5,7 @@ node_modules
 dist
 dist_types
 dist_analyze
+dist_docs
 
 # local env files
 .env.local
