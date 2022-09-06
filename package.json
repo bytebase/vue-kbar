@@ -28,7 +28,7 @@
     "eslint-formatter-summary": "1.1.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-vue": "8.7.1",
-    "pinia": "2.0.21",
+    "pinia": "2.0.22",
     "prettier": "2.7.1",
     "rimraf": "3.0.2",
     "rollup": "2.79.0",
