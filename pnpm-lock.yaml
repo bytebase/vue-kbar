@@ -12,7 +12,7 @@ specifiers:
   eslint-plugin-prettier: 4.2.1
   eslint-plugin-vue: 8.7.1
   match-sorter: ^6.3.1
-  pinia: 2.0.21
+  pinia: 2.0.22
   prettier: 2.7.1
   rimraf: 3.0.2
   rollup: 2.79.0
@@ -40,7 +40,7 @@ devDependencies:
   eslint-formatter-summary: 1.1.0
   eslint-plugin-prettier: 4.2.1_99a8c9fa965e983db7d4834c61fad511
   eslint-plugin-vue: 8.7.1_eslint@8.23.0
-  pinia: 2.0.21_typescript@4.8.2+vue@3.2.38
+  pinia: 2.0.22_typescript@4.8.2+vue@3.2.38
   prettier: 2.7.1
   rimraf: 3.0.2
   rollup: 2.79.0
@@ -3241,8 +3241,8 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /pinia/2.0.21_typescript@4.8.2+vue@3.2.38:
-    resolution: {integrity: sha512-6ol04PtL29O0Z6JHI47O3JUSoyOJ7Og0rstXrHVMZSP4zAldsQBXJCNF0i/H7m8vp/Hjd/CSmuPl7C5QAwpeWQ==}
+  /pinia/2.0.22_typescript@4.8.2+vue@3.2.38:
+    resolution: {integrity: sha512-u+b8/BC+tmvo3ACbYO2w5NfxHWFOjvvw9DQnyT0dW8aUMCPRQT5QnfZ5R5W2MzZBMTeZRMQI7V/QFbafmM9QHw==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
