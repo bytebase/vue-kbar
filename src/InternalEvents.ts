@@ -90,20 +90,9 @@ function useDocumentLock() {
     if (visibility === "entering") {
       document.body.style.pointerEvents = "none";
       document.body.style.overflow = "hidden";
-
-      let scrollbarWidth = getScrollbarWidth();
-
-      // take into account the margins explicitly added by the consumer
-      const mr = getComputedStyle(document.body).marginRight;
-      if (mr) {
-        // remove non-numeric values; px, rem, em, etc.
-        scrollbarWidth += Number(mr.replace(/\D/g, ""));
-      }
-      document.body.style.marginRight = scrollbarWidth + "px";
     } else if (visibility === "hidden") {
       document.body.style.removeProperty("pointer-events");
       document.body.style.removeProperty("overflow");
-      document.body.style.removeProperty("margin-right");
     }
   });
 }
@@ -160,18 +149,6 @@ function useShortcuts() {
       buffer.length = 0;
     }
   );
-}
-
-function getScrollbarWidth() {
-  const outer = document.createElement("div");
-  outer.style.visibility = "hidden";
-  outer.style.overflow = "scroll";
-  document.body.appendChild(outer);
-  const inner = document.createElement("div");
-  outer.appendChild(inner);
-  const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
-  outer.parentNode!.removeChild(outer);
-  return scrollbarWidth;
 }
 
 function shouldRejectKeystrokes(
